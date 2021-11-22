@@ -40,7 +40,11 @@
 <body>
     
     <div class="body">
-    
+    <div class="brand">
+      <div class="brand-name">
+        <img src="img/test3.png" alt="">
+      </div>
+    </div>
       <div class="login-form-container">
         <form class="login-form" action="Danhky.php" method="POST">
           
