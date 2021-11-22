@@ -35,7 +35,7 @@
     <div class="body">
       <div class="brand">
         <div class="brand-name">
-          <img src="img/test3.png" alt="">
+          <img src="img/test2.png" alt="">
         </div>
         <div class="exit-btn">
           <a href="Home.php"><i class="fas fa-times-circle"></i></a>
