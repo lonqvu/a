@@ -1,28 +1,36 @@
 <?php
-include 'config/db.php';
-error_reporting(0);
-$sql_tk = "SELECT * FROM tk";
-$query_dm = mysqli_query($connect,$sql_tk);
+require_once 'config/db.php';
+if(isset($_POST['search_button'])){
+    $tu_khoa = $_POST['search_product'];
+}
 
+$sql_spnb = "SELECT * FROM sanpham limit 1";
+$query_spnb = mysqli_query($connect,$sql_spnb);
+
+$sql_dm = "SELECT * FROM dmsanpham";
+$query_dm = mysqli_query($connect,$sql_dm);
+$sql_search = "SELECT * FROM sanpham where ten_sp like '%$tu_khoa%'";
+$query_search = mysqli_query($connect,$sql_search);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Quản lý Tài khoản</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Tìm kiếm</title>
+
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-    <link href="css/manager.css" rel="stylesheet" type="text/css"/>
-    <style>
-        img{
-            width: 200px;
-            height: 120px;
-        }
-    </style>
-    <body>
+    <!------ Include the above in your HEAD tag ---------->
+
+
+</head>
+
+<body>
+
+    <!--begin of menu-->
     <section id="nav-bar">
         <nav class="navbar navbar-expand-lg navbar-dark ">
             <div class="container-fluid">
@@ -65,6 +73,9 @@ $query_dm = mysqli_query($connect,$sql_tk);
                     <i class="fas fa-user"></i>
                     </a>
                 </div>
+
+
+
             </div>
             <form action="Search.php?quanly=timkiem" method="post" class="search-bar-container">
                 <input name="search_product" id="search-bar" class="form-control me-2" type="search" placeholder="Nhập địa điểm du lịch cần tìm kiếm..." aria-label="Search">
@@ -75,52 +86,151 @@ $query_dm = mysqli_query($connect,$sql_tk);
 
         </nav>
     </section>
-        <div class="container">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h2>Quản lý <b>sản phẩm Tour du lịch</b></h2>
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="Danhky.php" class="btn btn-success "><i class="fas fa-plus-square"></i> <span>Thêm tài khoản</span></a>
-                            
-                        </div>
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="img/quang-cao-du-lich_113702379.png" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="img/bannertournuocngoai.png" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block" style="position: absolute; top:0px;">
+                    <h5>Du lịch 5 Châu</h5>
+                    <p>Chất lượng toàn cầu</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="img/xu-huong-phat-trien-cua-nganh-kinh-doanh-khach-san.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Dịch vụ</h5>
+                    <p>Luôn đem lại những gì bạn cần</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <!--end of menu-->
+    <div class="container">
+        <div class="row">
+            <!-- Left-->
+            <div class="col-md-3">
+                
+                    <div class="card-header bg-primary text-white text-uppercase"><i class="fa fa-list"></i>Danh mục sản phẩm</div>
+                    <ul class="list-group category_block">
+                        <?php
+                        while ($row_dm = mysqli_fetch_assoc($query_dm)) { ?>
+                            <li class="list-group-item text-black"><a href="Home_dm.php?id_dm=<?php echo $row_dm['id_dm'] ?>"><?php echo $row_dm['ten_dm'] ?></a></li>
+                        <?php } ?>
+                        <li class="list-group-item text-white"><a href="Home_km.php ?>">Khuyến mại</a></li>
+                    </ul>
+                
+                <div class="card bg-light mb-3" id="sanphamnoibat">
+                    <div class="card-header bg-success text-white text-uppercase">Sản phẩm nổi bật</div>
+                    <div class="card-body">
+                        <?php while ($row_spnb = mysqli_fetch_assoc($query_spnb)) { ?>
+                            <img class="img-fluid" src="img/<?php echo $row_spnb['anh_sp'] ?>" />
+                            <h5 class="card-title"><?php echo $row_spnb['ten_sp'] ?></h5>
+                            <p class="bloc_left_price"><?php echo number_format($row_spnb['gia_sp']) ?> VND</p>
+                            <div class="col">
+                                <a href="Cart.php?id_sp=<?php echo $row_sp['id_sp']; ?>" class="btn btn-success btn-block">Đặt hàng</a>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                           
-                            <th>ID</th>
-                            <th>Tên người dùng</th>
-                            <th>Mật khẩu</th>
-                            <th>Actions</th>
-                         
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!--vòng lặp-->
-                        <?php while($row_sp=mysqli_fetch_assoc($query_dm)){ ?>
-                            <tr>
-                            <td><?php echo $row_sp['id'] ?></td>
-                                <td><?php echo $row_sp['username'] ?></td>
-                                <td><?php echo $row_sp['password'] ?></td>
+            </div>
+            <!--End left-->
+            <div class="col-md-9">
+                <div class="row" id="roww">
+                    <!--vong lap-->
+                    <?php
+                    while($row_search = mysqli_fetch_assoc($query_search)) {?>
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card">
+                                <img class="img" src="img/<?php echo $row_search['anh_sp'] ?>" alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title show_txt"><a href="Detail.php?id_sp=<?php echo $row_search['id_sp']; ?>" title="View Product" class="nd"><?php echo $row_search['ten_sp'] ?></a></h4>
+                                    
+                                </p>
                                 
-                                <td>
-                                    <a href="Sua_TK.php?id=<?php echo $row_sp['id'] ?>" class="btn btn-success" style="margin-bottom: 10px;">Sửa</a>
-                                    <a href="xoa_TK.php?id=<?php echo $row_sp['id'] ?>"class="btn btn-danger" onclick="return confirm('Bạn có muốn xóa tài khoản này?')">Xóa</a>
-                                </td>
-                            </tr>
-                        <?php } ?>
-                        <!-- kết thúc vòng lặp-->
-                    </tbody>
-                </table>
-                <a href="Home.php"><button type="button" class="btn btn-primary">Trở lại</button>
-
+                                    <div class="col">
+                                    <p>Giá chỉ: <span class="money"><?php echo number_format($row_search['gia_sp']) ?> VNĐ</span></p>
+                                    </div>
+                                    <div class="col">
+                                        <a href="Cart.php?id_sp=<?php echo $row_search['id_sp']; ?>" class="btn btn-success">Đặt hàng</a>
+                                    </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
+                    <!--ket thuc vong lap-->
                 </div>
-        </a>
-        <script src="js/manager.js" type="text/javascript"></script>
-        <script src="js/script.js"></script>
-    </body>
-    </html>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-lg-4 col-xl-3">
+                    <h5>Thông tin về trang web</h5>
+                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                    <p class="mb-0">
+                        Một trang web giúp khách hàng tìm hiều thông tin về các tour du lịch, dịch vụ
+                        <p>Trang web được phát triển bởi 3 thành viên</p>
+                    </p>
+                </div>
+
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto">
+                    <h5>Nhóm 17</h5>
+                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                    <ul class="list-unstyled">
+                        <li><a href="">Vũ Xuân Long</a></li>
+                        <li><a href="">Phạm Yến Linh</a></li>
+                        <li><a href="">Vương Thị Linh</a></li>
+                        
+                    </ul>
+                </div>
+
+         
+
+                <div class="col-md-4 col-lg-3 col-xl-3">
+                    <h5>Liên hệ</h5>
+                    <hr class="bg-white mb-2 mt-0 d-inline-block mx-auto w-25">
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-home mr-2"></i> Văn Trì - Hà Nội</li>
+                        <li><i class="fa fa-envelope mr-2"></i> Loqcoqtu@gmail.com</li>
+                        <li><i class="fa fa-phone mr-2"></i> + 113</li>
+                        <li><i class="fa fa-print mr-2"></i> + 112</li>
+                    </ul>
+                </div>
+                <div class="col-12 copyright mt-3">
+                    <p class="float-left">
+                        <a href="#">Trở về đầu</a>
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--End footer-->
+    <script src="js/script.js"></script>
+</body>
+
+</html>
