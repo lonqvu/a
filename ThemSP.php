@@ -19,6 +19,7 @@ if (isset($_POST['sbm'])) {
 
     $query = mysqli_query($connect, $sql);
     move_uploaded_file($anh_sp_tmp, 'img/' . $anh_sp);
+    header("location:ManagerProduct.php");
 }
 ?>
 <style type="text/css">
